@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width,initial-scale=1" name="viewport"/>
+    <meta name="csrf-token" th:content="${_csrf.token}"/>
+    <title>ExpenseFlow · Expenses</title>
+    <link href="/css/style.css" rel="stylesheet"/>
+  </head>
+  <body data-page="expenses">
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand"><span class="brand-mark">₹</span>
+          <div><strong>ExpenseFlow</strong><small>Personal finance</small></div>
+        </div>
+        <nav><a href="/dashboard">Overview</a><a class="active" href="/expenses">Expenses</a><a href="/categories">Categories</a><a href="/reports">Monthly Reports</a><a href="/profile">My Profile</a></nav>
+        <div class="sidebar-foot"><span class="status-dot"></span>Secure workspace
+          <form action="/logout" method="post" style="margin-top:12px"><input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/><button class="btn ghost small" style="width:100%">Sign out</button></form>
+        </div>
+      </aside>
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">TRANSACTIONS</p>
+            <h1>Expenses</h1>
+            <p class="muted">Search, filter and manage every transaction.</p>
+          </div>
+          <button class="btn primary" id="addBtn">+ Add expense</button>
+        </header>
+        <section class="panel filters">
+          <div class="filter"><label>Search title</label><input id="search" placeholder="e.g. supermarket"/></div>
+          <div class="filter"><label>Category</label><select id="category"><option value="">All categories</option></select></div>
+          <div class="filter"><label>Month</label><input id="month" type="month"/></div>
+          <div class="filter"><label>From</label><input id="fromDate" type="date"/></div>
+          <div class="filter"><label>To</label><input id="toDate" type="date"/></div>
+          <button class="btn ghost" id="clearFilters">Clear</button><button class="btn secondary" id="exportBtn">Export CSV</button>
+        </section>
+        <section class="panel table-panel">
+          <div class="panel-head">
+            <div>
+              <h2>Expense history</h2>
+              <p class="muted" id="resultSummary">Loading…</p>
+            </div>
+            <div class="table-tools"><select id="sort"><option value="expenseDate:DESC">Newest</option><option value="expenseDate:ASC">Oldest</option><option value="amount:DESC">Highest amount</option><option value="amount:ASC">Lowest amount</option><option value="title:ASC">Title A–Z</option></select></div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Expense</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="expenseRows"></tbody>
+            </table>
+            <div class="empty hidden" id="empty">No expenses match your filters.</div>
+          </div>
+          <div class="pagination">
+            <div><span id="pageInfo"></span><strong class="pagination-total" id="pageTotal"></strong></div>
+            <div><button class="btn small ghost" id="prev">Previous</button><button class="btn small ghost" id="next">Next</button></div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div class="modal-backdrop hidden" id="modal">
+      <div class="modal">
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow" id="modalEyebrow">NEW TRANSACTION</p>
+            <h2 id="modalTitle">Add expense</h2>
+          </div>
+          <button class="icon-btn" id="closeModal">×</button>
+        </div>
+        <form id="expenseForm"><input id="expenseId" type="hidden"/>
+          <div class="form-grid">
+            <div class="field full"><label>Title *</label><input id="title" maxlength="120" placeholder="e.g. Grocery shopping" required=""/></div>
+            <div class="field"><label>Amount *</label><input id="amount" min="0.01" placeholder="0.00" required="" step="0.01" type="number"/></div>
+            <div class="field"><label>Date *</label><input id="expenseDate" required="" type="date"/></div>
+            <div class="field full"><label>Category *</label><select id="expenseCategory" required=""></select></div>
+            <div class="field full"><label>Description</label><textarea id="description" maxlength="250" placeholder="Optional note about this expense" rows="3"></textarea><small class="counter"><span id="descCount">0</span>/250</small></div>
+          </div>
+          <div class="form-error hidden" id="formError"></div>
+          <div class="modal-actions"><button class="btn ghost" id="cancelModal" type="button">Cancel</button><button class="btn primary" id="saveBtn">Save expense</button></div>
+        </form>
+      </div>
+    </div>
+    <div id="toast"></div>
+    <script src="/js/app.js"></script>
+    <script src="/js/expenses.js"></script>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width,initial-scale=1" name="viewport"/>
+    <meta name="csrf-token" th:content="${_csrf.token}"/>
+    <title>ExpenseFlow · My Profile</title>
+    <link href="/css/style.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand"><span class="brand-mark">₹</span>
+          <div><strong>ExpenseFlow</strong><small>Personal finance</small></div>
+        </div>
+        <nav><a href="/dashboard">Overview</a><a href="/expenses">Expenses</a><a href="/categories">Categories</a><a href="/reports">Monthly Reports</a><a class="active" href="/profile">My Profile</a></nav>
+        <div class="sidebar-foot">
+          <form action="/logout" method="post"><input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/><button class="btn ghost small" style="width:100%">Sign out</button></form>
+        </div>
+      </aside>
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">ACCOUNT</p>
+            <h1>My profile</h1>
+            <p class="muted">You can change your personal details only while signed in.</p>
+          </div>
+        </header>
+        <section class="grid-two">
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <h2>Personal details</h2>
+                <p class="muted">These details belong to your customer account.</p>
+              </div>
+            </div>
+            <form id="profileForm">
+              <div class="form-grid">
+                <div class="field"><label>Full name</label><input id="fullName" maxlength="100" required="" th:value="${user.fullName}"/></div>
+                <div class="field"><label>Email</label><input id="email" maxlength="150" required="" th:value="${user.email}" type="email"/></div>
+                <div class="field full"><label>Phone</label><input id="phone" maxlength="30" th:value="${user.phone}"/></div>
+              </div>
+              <div class="form-error hidden" id="profileError"></div>
+              <div class="modal-actions"><button class="btn primary">Save details</button></div>
+            </form>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <h2>Change password</h2>
+                <p class="muted">Use at least 8 characters.</p>
+              </div>
+            </div>
+            <form id="passwordForm">
+              <div class="field"><label>Current password</label><input id="currentPassword" required="" type="password"/></div>
+              <div class="field"><label>New password</label><input id="newPassword" minlength="8" required="" type="password"/></div>
+              <div class="form-error hidden" id="passwordError"></div>
+              <button class="btn primary">Update password</button>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div id="toast"></div>
+    <script src="/js/app.js"></script>
+    <script src="/js/profile.js"></script>
+  </body>
+</html>

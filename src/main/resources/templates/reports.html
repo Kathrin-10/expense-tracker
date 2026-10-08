@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width,initial-scale=1" name="viewport"/>
+    <meta name="csrf-token" th:content="${_csrf.token}"/>
+    <title>ExpenseFlow · Reports</title>
+    <link href="/css/style.css" rel="stylesheet"/>
+  </head>
+  <body data-page="reports">
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand"><span class="brand-mark">₹</span>
+          <div><strong>ExpenseFlow</strong><small>Personal finance</small></div>
+        </div>
+        <nav><a href="/dashboard">Overview</a><a href="/expenses">Expenses</a><a href="/categories">Categories</a><a class="active" href="/reports">Monthly Reports</a></nav>
+        <div class="sidebar-foot"><span class="status-dot"></span>Secure workspace
+          <form action="/logout" method="post" style="margin-top:12px"><input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/><button class="btn ghost small" style="width:100%">Sign out</button></form>
+        </div>
+      </aside>
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">ANALYTICS</p>
+            <h1>Monthly reports</h1>
+            <p class="muted">Compare spending totals and transaction volume by month.</p>
+          </div>
+          <a class="btn secondary" href="/api/expenses/export/csv">Export all CSV</a>
+        </header>
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Monthly summary</h2>
+              <p class="muted">Months are calculated from recorded expense dates.</p>
+            </div>
+          </div>
+          <div class="report-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th>Transactions</th>
+                  <th>Total expense</th>
+                  <th>Share</th>
+                </tr>
+              </thead>
+              <tbody id="reportRows"></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Monthly totals</h2>
+              <p class="muted">A visual view of your spending history.</p>
+            </div>
+          </div>
+          <div class="chart" id="reportChart"></div>
+        </section>
+      </main>
+    </div>
+    <div id="toast"></div>
+    <script src="/js/app.js"></script>
+    <script src="/js/reports.js"></script>
+  </body>
+</html>

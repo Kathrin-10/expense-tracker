@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width,initial-scale=1" name="viewport"/>
+    <meta name="csrf-token" th:content="${_csrf.token}"/>
+    <title>ExpenseFlow · Categories</title>
+    <link href="/css/style.css" rel="stylesheet"/>
+  </head>
+  <body data-page="categories">
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand"><span class="brand-mark">₹</span>
+          <div><strong>ExpenseFlow</strong><small>Personal finance</small></div>
+        </div>
+        <nav><a href="/dashboard">Overview</a><a href="/expenses">Expenses</a><a class="active" href="/categories">Categories</a><a href="/reports">Monthly Reports</a><a href="/profile">My Profile</a></nav>
+        <div class="sidebar-foot"><span class="status-dot"></span>Secure workspace
+          <form action="/logout" method="post" style="margin-top:12px"><input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/><button class="btn ghost small" style="width:100%">Sign out</button></form>
+        </div>
+      </aside>
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">ORGANIZATION</p>
+            <h1>Categories</h1>
+            <p class="muted">Keep your spending groups clean and meaningful.</p>
+          </div>
+          <button class="btn primary" id="addCategory">+ Add category</button>
+        </header>
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Expense categories</h2>
+              <p class="muted">Categories with existing expenses cannot be deleted.</p>
+            </div>
+          </div>
+          <div class="category-grid" id="categoryGrid"></div>
+        </section>
+      </main>
+    </div>
+    <div class="modal-backdrop hidden" id="categoryModal">
+      <div class="modal compact">
+        <div class="modal-head">
+          <div>
+            <p class="eyebrow">CATEGORY</p>
+            <h2 id="categoryModalTitle">Add category</h2>
+          </div>
+          <button class="icon-btn" id="closeCategory">×</button>
+        </div>
+        <form id="categoryForm"><input id="categoryId" type="hidden"/>
+          <div class="field"><label>Category name *</label><input id="categoryName" maxlength="50" placeholder="e.g. Education" required=""/></div>
+          <div class="form-error hidden" id="categoryError"></div>
+          <div class="modal-actions"><button class="btn ghost" id="cancelCategory" type="button">Cancel</button><button class="btn primary">Save category</button></div>
+        </form>
+      </div>
+    </div>
+    <div id="toast"></div>
+    <script src="/js/app.js"></script>
+    <script src="/js/categories.js"></script>
+  </body>
+</html>

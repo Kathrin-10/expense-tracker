@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width,initial-scale=1" name="viewport"/>
+    <meta name="csrf-token" th:content="${_csrf.token}"/>
+    <title>ExpenseFlow · Dashboard</title>
+    <link href="/css/style.css" rel="stylesheet"/>
+  </head>
+  <body data-page="dashboard">
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand"><span class="brand-mark">₹</span>
+          <div><strong>ExpenseFlow</strong><small>Personal finance</small></div>
+        </div>
+        <nav><a class="active" href="/dashboard">Overview</a><a href="/expenses">Expenses</a><a href="/categories">Categories</a><a href="/reports">Monthly Reports</a><a href="/profile">My Profile</a></nav>
+        <div class="sidebar-foot"><span class="status-dot"></span>Secure workspace
+          <form action="/logout" method="post" style="margin-top:12px"><input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/><button class="btn ghost small" style="width:100%">Sign out</button></form>
+        </div>
+      </aside>
+      <main class="main">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">OVERVIEW</p>
+            <h1>Expense dashboard</h1>
+            <p class="muted">A clear picture of where your money is going.</p>
+          </div>
+          <a class="btn primary" href="/expenses?action=add">+ Add expense</a>
+        </header>
+        <section class="stats" id="stats">
+          <div class="stat"><span>Total expenses</span><strong id="total">—</strong><small>All recorded expenses</small></div>
+          <div class="stat"><span>Transactions</span><strong id="count">—</strong><small>Total number of entries</small></div>
+          <div class="stat"><span>Highest expense</span><strong id="highest">—</strong><small>Single largest transaction</small></div>
+          <div class="stat"><span>This month</span><strong id="current">—</strong><small>Current calendar month</small></div>
+        </section>
+        <section class="grid-two">
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <h2>Category spending</h2>
+                <p class="muted">How your total is distributed.</p>
+              </div>
+              <a href="/categories">Manage</a>
+            </div>
+            <div class="bars" id="category-bars">
+              <div class="skeleton"></div>
+              <div class="skeleton"></div>
+              <div class="skeleton"></div>
+            </div>
+          </div>
+          <div class="panel highlight"><span class="label">LOWEST EXPENSE</span><strong id="lowest">—</strong>
+            <p class="muted">Smallest recorded transaction</p>
+            <a class="btn ghost" href="/expenses">View expenses →</a>
+          </div>
+        </section>
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Quick actions</h2>
+              <p class="muted">Jump into the workflows you use most.</p>
+            </div>
+          </div>
+          <div class="quick"><a href="/expenses?action=add"><b>＋</b><span>Add expense<small>Record a new transaction</small></span></a><a href="/categories"><b>▦</b><span>Categories<small>Organize spending</small></span></a><a href="/reports"><b>◔</b><span>Monthly report<small>Review spending trends</small></span></a></div>
+        </section>
+      </main>
+    </div>
+    <div id="toast"></div>
+    <script src="/js/app.js"></script>
+    <script src="/js/dashboard.js"></script>
+  </body>
+</html>

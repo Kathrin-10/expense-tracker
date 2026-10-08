@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width,initial-scale=1" name="viewport"/>
+    <title>ExpenseFlow · Register</title>
+    <link href="/css/auth.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <main class="auth-shell">
+      <div class="brand"><span class="brand-mark">₹</span>
+        <div><strong>ExpenseFlow</strong><small>Personal finance</small></div>
+      </div>
+      <section class="auth-card">
+        <p class="eyebrow">NEW CUSTOMER</p>
+        <h1>Create your account</h1>
+        <p class="muted">Your expenses will belong to your account and remain separate from other customers.</p>
+        <div class="error" th:if="${error}" th:text="${error}"></div>
+        <form action="/register" method="post" th:object="${register}"><input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+          <div class="field"><label>Full name</label><input maxlength="100" required="" th:field="*{fullName}"/></div>
+          <div class="field"><label>Email</label><input maxlength="150" required="" th:field="*{email}" type="email"/></div>
+          <div class="field"><label>Phone</label><input maxlength="30" th:field="*{phone}"/></div>
+          <div class="field"><label>Password</label><input minlength="8" required="" th:field="*{password}" type="password"/></div>
+          <button class="btn">Create account</button>
+        </form>
+        <div class="links"><a href="/login">Already have an account? Sign in</a></div>
+      </section>
+    </main>
+  </body>
+</html>

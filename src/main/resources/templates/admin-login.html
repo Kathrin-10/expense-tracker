@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width,initial-scale=1" name="viewport"/>
+    <title>ExpenseFlow · Admin Login</title>
+    <link href="/css/auth.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <main class="auth-shell">
+      <div class="brand"><span class="brand-mark">A</span>
+        <div><strong>ExpenseFlow</strong><small>Administration</small></div>
+      </div>
+      <section class="auth-card">
+        <p class="eyebrow">ADMINISTRATOR LOGIN</p>
+        <h1>Control center</h1>
+        <p class="muted">Sign in with an administrator account to manage customer accounts.</p>
+        <div class="error" th:if="${param.error}" th:text="${param.role != null ? 'This account does not have administrator access.' : 'Invalid administrator credentials.'}"></div>
+        <form action="/login" method="post"><input name="adminLogin" type="hidden" value="true"/><input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+          <div class="field"><label>Administrator email</label><input autofocus="" name="email" required="" type="email"/></div>
+          <div class="field"><label>Password</label><input name="password" required="" type="password"/></div>
+          <button class="btn">Enter admin panel</button>
+        </form>
+        <div class="links"><a href="/login">← Customer login</a></div>
+        <div class="demo">Administrator access is restricted to the single account configured in the application settings.</div>
+      </section>
+    </main>
+  </body>
+</html>

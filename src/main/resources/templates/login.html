@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width,initial-scale=1" name="viewport"/>
+    <title>ExpenseFlow · Login</title>
+    <link href="/css/auth.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <main class="auth-shell">
+      <div class="brand"><span class="brand-mark">₹</span>
+        <div><strong>ExpenseFlow</strong><small>Personal finance</small></div>
+      </div>
+      <section class="auth-card">
+        <p class="eyebrow">CUSTOMER LOGIN</p>
+        <h1>Welcome back</h1>
+        <p class="muted">Sign in to manage your expenses and monthly reports.</p>
+        <div class="message success" role="status" th:if="${param.registered}">Registration successful. You can now sign in.</div>
+        <div class="message success" role="status" th:if="${param.reset}">Your password has been reset successfully.</div>
+        <div class="error" role="alert" th:if="${param.deactivated}">Your account has been deactivated by an administrator.</div>
+        <div class="error" role="alert" th:if="${param.error}">Invalid email or password, or your account is inactive.</div>
+        <div class="error" role="alert" th:if="${param['customer-only']}">Administrator accounts can only sign in through the administrator panel.</div>
+        <form action="/login" method="post"><input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+          <div class="field"><label>Email</label><input autofocus="" name="email" required="" type="email"/></div>
+          <div class="field"><label>Password</label><input name="password" required="" type="password"/></div>
+          <button class="btn">Sign in</button>
+        </form>
+        <div class="links"><a href="/register">Create account</a><a href="/forgot-password">Forgot password?</a></div>
+        <div class="links"><a href="/admin/login">Administrator login →</a></div>
+      </section>
+      <p class="footer-note">Secure customer workspace · ExpenseFlow</p>
+    </main>
+  </body>
+</html>
